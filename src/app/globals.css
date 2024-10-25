@@ -58,6 +58,7 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 260 50% 92%;
     --foreground: 260 50% 7%;
@@ -98,12 +99,14 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
 @layer base {
+
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -113,4 +116,9 @@
 
 .react-datepicker-wrapper {
   width: 100%;
+}
+
+
+.clip-custom {
+  clip-path: polygon(30px 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px), 0 30px);
 }
