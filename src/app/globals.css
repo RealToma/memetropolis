@@ -119,6 +119,33 @@
 }
 
 
-.clip-custom {
+.clip-trading_chart_card {
   clip-path: polygon(30px 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px), 0 30px);
+}
+
+.clip-trading_chart_card_nav {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  top: 0;
+  left: 0;
+  clip-path: polygon(30px 1px, 89px 1px, 110px 30px, 110px 362px, 30px calc(100% - 1px), 1px calc(100% - 30px), 1px 30px);
+}
+
+.trading_chart_card_nav_border {
+  clip-path: polygon(30px 0, 90px 0, 111px 30px, 111px 363px, 30px 100%, 0 calc(100% - 30px), 0 30px);
+
+}
+/* .treding_chart_search{
+  clip-path: polygon(30px 0, 90px 0, 111px 30px, 111px 363px, 30px 100%, 0 calc(100% - 30px), 0 30px);
+} */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
