@@ -12,6 +12,7 @@ import TopProjects from './top-projects'
 import { Button } from '@/components/ui/button'
 
 import AutocompleteSearchToken from '@/app/_components/autocomplete-search-token'
+import TradingChart from '@/app/_components/trading-chart'
 // import BubbleMap from "@/app/_components/bubble-map";
 import DropdownSort from '@/app/_components/dropdown-sort'
 
@@ -36,10 +37,10 @@ const Charts = () => {
         <DropdownSort />
       </div>
       <div className="grid grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-2">
-        <img src="/assets/img/home/charts/chart.svg" />
-        <img src="/assets/img/home/charts/chart.svg" />
-        <img src="/assets/img/home/charts/chart.svg" />
-        <img src="/assets/img/home/charts/chart.svg" />
+        <TradingChart />
+        <TradingChart />
+        <TradingChart />
+        <TradingChart />
       </div>
     </>
   )
