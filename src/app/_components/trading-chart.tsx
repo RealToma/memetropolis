@@ -172,8 +172,66 @@ const TradingChart = ({ market, }: { market: string; }) => {
                         <div ref={chartRef} className="w-full h-[218px]" ></div>
                     </div>
                     {/* bottom items */}
-                    <div className="h-[60px] ">
-                        
+                    <div className="h-[60px] border-t border-t-white/20 pt-4 flex">
+                        <div className="grow  flex items-center justify-between">
+                            {/* left filters */}
+                            <div className="flex space-x-3 text-[#605B66] text-sm pl-[26px]">
+                                <div className="flex space-x-2">
+                                    <button>5d</button>
+                                    <p className="text-[#605B66]">/</p>
+                                    <button>1d</button>
+                                </div>
+                                <button>
+                                    <Image
+                                        src="/assets/img/icons/chart_calender.svg"
+                                        className=""
+                                        alt="scanner"
+                                        width={16}
+                                        height={16}
+                                    />
+
+
+                                </button>
+                            </div>
+                            {/* right filters */}
+                            <div className="flex space-x-2 text-sm">
+                                <button className="text-[#605B66]">$</button>
+                                <p className="text-[#605B66]">/</p>
+                                <button className="text-[#605B66]">log</button>
+                                <p className="text-[#605B66]">/</p>
+                                <button className="text-[#725AC1]">auto</button>
+                            </div>
+                        </div>
+                        {/* right icons */}
+                        <div className="bg-[#1B1421] w-[192px] trading_chart_bottom_right space-x-6 flex items-center justify-end pr-[27px]">
+                            <button>
+                                <Image
+                                    src="/assets/img/icons/scanner.svg"
+                                    className=""
+                                    alt="scanner"
+                                    width={24}
+                                    height={24}
+                                />
+                            </button>
+                            <button>
+                                <Image
+                                    src="/assets/img/icons/camera.svg"
+                                    className=""
+                                    alt="camera"
+                                    width={24}
+                                    height={24}
+                                />
+                            </button>
+                            <button>
+                                <Image
+                                    src="/assets/img/icons/settings.svg"
+                                    className=""
+                                    alt="settings"
+                                    width={24}
+                                    height={24}
+                                />
+                            </button>
+                        </div>
                     </div>
                 </div>
 
