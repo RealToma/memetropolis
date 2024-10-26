@@ -1,9 +1,56 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChartManager } from "../utils/ChartManager";
+import { KLine } from "../utils/types";
+
 const TradingChart = ({ market, }: { market: string; }) => {
     const chartRef = useRef<HTMLDivElement>(null);
     const chartManagerRef = useRef<ChartManager>(null);
+    const init = async () => {
+        let klineData: KLine[] = [];
+        try {
+            klineData = Array.from({ length: 100 }, (_, i) => ({
+                close: (100 + Math.random() * 10).toFixed(2),
+                end: new Date(2023, 9, 23, 14 + Math.floor(i / 2), (i % 2) * 30).toISOString(),
+                high: (102 + Math.random() * 10).toFixed(2),
+                low: (98 + Math.random() * 10).toFixed(2),
+                open: (100 + Math.random() * 10).toFixed(2),
+                quoteVolume: (5000 + Math.random() * 3000).toFixed(2),
+                start: new Date(2023, 9, 23, 14 + Math.floor(i / 2), (i % 2) * 30).toISOString(),
+                trades: Math.floor(200 + Math.random() * 100).toString(),
+                volume: (7000 + Math.random() * 3000).toFixed(2)
+            }));
+
+        } catch (e) { }
+
+        if (chartRef) {
+            if (chartManagerRef.current) {
+                chartManagerRef.current.destroy();
+            }
+            const chartManager = new ChartManager(
+                chartRef.current,
+                [
+                    ...klineData?.map((x) => ({
+                        close: parseFloat(x.close),
+                        high: parseFloat(x.high),
+                        low: parseFloat(x.low),
+                        open: parseFloat(x.open),
+                        timestamp: new Date(x.end),
+                    })),
+                ].sort((x, y) => (x.timestamp < y.timestamp ? -1 : 1)) || [],
+                {
+                    background: "#07040B",
+                    color: "white",
+                }
+            );
+            //@ts-ignore
+            chartManagerRef.current = chartManager;
+        }
+    };
+
+    useEffect(() => {
+        init();
+    }, [market, chartRef]);
 
 
 
@@ -122,11 +169,11 @@ const TradingChart = ({ market, }: { market: string; }) => {
                             </span>
                         </div>
                         {/* chart */}
-                        <div ref={chartRef} style={{ height: "520px", width: "100%", marginTop: 4 }}></div>
+                        <div ref={chartRef} className="w-full h-[218px]" ></div>
                     </div>
                     {/* bottom items */}
-                    <div className="h-[60px] bg-black">
-                        kjh
+                    <div className="h-[60px] ">
+                        
                     </div>
                 </div>
 
