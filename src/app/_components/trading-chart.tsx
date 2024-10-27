@@ -237,7 +237,7 @@ const TradingChart = ({ market, }: { market: string; }) => {
 
             </div>
             {/* search */}
-            <div className="absolute bg-[#191222] treding_chart_search w-[191px] h-[52px] -top-[26px] z-10 left-[83px]">
+            <div className="absolute bg-[#191222] treding_chart_search w-[191px] h-[52px] -top-[26px]  left-[83px]">
                 <div className="flex items-center justify-between h-full w-[191px] px-[28px]">
                     <div className="flex items-center justify-center">
                         <Image
@@ -264,6 +264,30 @@ const TradingChart = ({ market, }: { market: string; }) => {
             {/* time tag */}
             <div className="w-[114px] h-[32px] rounded-full bg-[#413B48] text-[#FFF37B] p-2 text-[13px] flex items-center justify-center absolute -top-4 right-11">
                 <p>22:49:40 (UTC)</p>
+            </div>
+            {/* top cut out part */}
+            <div className="absolute trading_top_right_cut  h-[30px] w-[100px] right-[200px] -top-[15px] flex items-center justify-center space-x-[14px]">
+                <button className="text-[#605B66] text-[13px]">
+                    5m
+                </button>
+                <button>
+                    <Image
+                        src="/assets/img/icons/candle_stick.svg"
+                        className=""
+                        alt="candle stick"
+                        width={24}
+                        height={24}
+                    />
+                </button>
+                <button>
+                    <Image
+                        src="/assets/img/icons/fx.svg"
+                        className=""
+                        alt="fx"
+                        width={16}
+                        height={16}
+                    />
+                </button>
             </div>
         </div >
     );

@@ -36,7 +36,7 @@ const Charts = () => {
         </div>
         <DropdownSort />
       </div>
-      <div className="grid grid-cols-1 gap-x-6 gap-y-12 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-x-6 gap-y-12 xl:grid-cols-2">
         <TradingChart />
         <TradingChart />
         <TradingChart />

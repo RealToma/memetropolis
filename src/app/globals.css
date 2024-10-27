@@ -120,7 +120,7 @@
 
 
 .clip-trading_chart_card {
-  clip-path: polygon(30px 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px), 0 30px);
+  clip-path: polygon(30px 0, calc(100% - 300px) 0, calc(100% - 300px) 15px, calc(100% - 200px) 15px, calc(100% - 200px) 0, calc(100% - 30px) 0, 100% 30px, 100% 100%, 30px 100%, 0 calc(100% - 30px), 0 30px);
 }
 
 .clip-trading_chart_card_nav {
@@ -153,4 +153,12 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.trading_top_right_cut {
+  width: 100px;
+  height: 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 0 10px #07040B;
+  z-index: -1;
 }
