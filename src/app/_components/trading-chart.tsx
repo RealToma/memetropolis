@@ -1,11 +1,23 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChartManager } from "../utils/ChartManager";
 import { KLine } from "../utils/types";
+import { SubtractIcon, CrossHair, Smily, Ruler, Text, Brush, RightArrow } from "@/components/Icons";
+import { cn } from '@/core/lib/utils'
 
 const TradingChart = ({ market, }: { market: string; }) => {
     const chartRef = useRef<HTMLDivElement>(null);
     const chartManagerRef = useRef<ChartManager>(null);
+    const [activeNavButton, setActiveNavButton] = useState<String>('');
+    const [showNavFloat, setShowNavFloat] = useState<boolean>(false);
+
+    const handleActiveNavButtonClick = (button: string) => {
+        if (activeNavButton == button) {
+            setActiveNavButton('');
+        } else {
+            setActiveNavButton(button);
+        }
+    };
     const init = async () => {
         let klineData: KLine[] = [];
         try {
@@ -64,98 +76,51 @@ const TradingChart = ({ market, }: { market: string; }) => {
                     </div>
                     {/* nav buttons */}
                     <div className="left_nav overflow-y-hidden-hidden  clip-trading_chart_card_nav  bg-[#07040B] py-[45px] flex flex-col items-center ">
-                        <div className=" flex flex-col items-center space-y-[18px] overflow-y-scroll no-scrollbar">
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/subtract.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/smily.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/subtract.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/smily.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/subtract.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/smily.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/subtract.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/smily.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>                    <button>
-                                <Image
-                                    src="/assets/img/icons/smily.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
-                            <button>
-                                <Image
-                                    src="/assets/img/icons/smily.svg"
-                                    className=""
-                                    alt="subtract"
-                                    width={20}
-                                    height={20}
-                                />
-                            </button>
+                        <div className=" flex flex-col items-center space-y-[6px] overflow-y-scroll no-scrollbar">
+                            <div className="flex items-center justify-center group">
+                                <button onClick={() => handleActiveNavButtonClick('crosshair')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'crosshair' ? "bg-[#191222]" : ""}`)}>
+                                    <CrossHair className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'crosshair' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
+                                </button>
+                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+                            </div>
+                            <div className="flex items-center justify-center group">
+                                <button onClick={() => handleActiveNavButtonClick('subtract')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'subtract' ? "bg-[#191222]" : ""}`)}>
+                                    <SubtractIcon className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'subtract' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
+                                </button>
+                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+
+                            </div>
+                            <div className="flex items-center justify-center group">
+                                <button onClick={() => handleActiveNavButtonClick('smily')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'smily' ? "bg-[#191222]" : ""}`)}>
+                                    <Smily className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'smily' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
+                                </button>
+                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+
+                            </div>
+                            <div className="flex items-center justify-center group">
+                                <button onClick={() => handleActiveNavButtonClick('ruler')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'ruler' ? "bg-[#191222]" : ""}`)}>
+                                    <Ruler className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'ruler' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
+                                </button>
+                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+
+                            </div>
+                            <div className="flex items-center justify-center group">
+                                <button onClick={() => handleActiveNavButtonClick('text')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'text' ? "bg-[#191222]" : ""}`)}>
+                                    <Text className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'text' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
+                                </button>
+                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+
+                            </div>
+                            <div className="flex items-center justify-center group">
+                                <button onClick={() => handleActiveNavButtonClick('brush')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'brush' ? "bg-[#191222]" : ""}`)}>
+                                    <Brush className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'brush' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
+                                </button>
+                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+
+                            </div>
                         </div>
                     </div>
+                    {showNavFloat && <div className="absolute min-h-10 w-32 bg-[#191222] top-10 left-20 z-10"></div>}
                 </div>
                 {/* chart container */}
                 <div className="w-full   mt-[26px] flex  justify-between flex-col">
