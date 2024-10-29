@@ -9,15 +9,49 @@ const TradingChart = ({ market, }: { market: string; }) => {
     const chartRef = useRef<HTMLDivElement>(null);
     const chartManagerRef = useRef<ChartManager>(null);
     const [activeNavButton, setActiveNavButton] = useState<String>('');
-    const [showNavFloat, setShowNavFloat] = useState<boolean>(false);
+    const [activeNavButtonNumber, setActiveNavButtonNumber] = useState<number>(-1);
+    const [positionTop, setPositionTop] = useState<number>(40);
+    const floatingNavButtonsRef = useRef<HTMLDivElement>(null);
+
+    // click outside of floatingNavButtonsRef to set activeNavButtonNumber to -1
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (floatingNavButtonsRef.current && !floatingNavButtonsRef.current.contains(event.target as Node)) {
+                setActiveNavButtonNumber(-1);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [floatingNavButtonsRef]);
 
     const handleActiveNavButtonClick = (button: string) => {
         if (activeNavButton == button) {
             setActiveNavButton('');
         } else {
             setActiveNavButton(button);
+
         }
     };
+
+    const handleFloatButtonClick = () => {
+        setActiveNavButtonNumber(-1);
+    }
+    const handleActiveNavDetailsButtonClick = (buttonNumber: number) => {
+        console.log(buttonNumber, activeNavButtonNumber);
+        if (activeNavButtonNumber == buttonNumber) {
+            setActiveNavButtonNumber(-1);
+        }
+        else {
+            setActiveNavButtonNumber(buttonNumber);
+            var positionTop = buttonNumber * 40 + 40;
+            if (positionTop > 300) {
+                positionTop = 300;
+            }
+            setPositionTop(positionTop);
+        }
+    }
     const init = async () => {
         let klineData: KLine[] = [];
         try {
@@ -70,57 +104,60 @@ const TradingChart = ({ market, }: { market: string; }) => {
         <div className="relative">
             <div className="bg-[#07040B] h-[363px] relative  clip-trading_chart_card flex">
                 {/* nav */}
+
                 <div className="relative h-full">
                     {/* nav border */}
                     <div className="trading_chart_card_nav_border bg-[#605B66] h-full w-[111px] border-[#1E1E1E]">
                     </div>
                     {/* nav buttons */}
                     <div className="left_nav overflow-y-hidden-hidden  clip-trading_chart_card_nav  bg-[#07040B] py-[45px] flex flex-col items-center ">
-                        <div className=" flex flex-col items-center space-y-[6px] overflow-y-scroll no-scrollbar">
+                        <div className=" flex flex-col items-center space-y-[6px] overflow-y-scroll no-scrollbar ">
                             <div className="flex items-center justify-center group">
                                 <button onClick={() => handleActiveNavButtonClick('crosshair')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'crosshair' ? "bg-[#191222]" : ""}`)}>
                                     <CrossHair className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'crosshair' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
                                 </button>
-                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+                                <button onClick={() => handleActiveNavDetailsButtonClick(0)} className={cn("h-8 group-hover:text-[#605B66]  group-hover:bg-[#191222]", activeNavButtonNumber == 0 ? "text-[#605B66]  bg-[#191222]" : "text-transparent bg-transparent")}>
+                                    <RightArrow className="w-2" />
+                                </button>
                             </div>
                             <div className="flex items-center justify-center group">
                                 <button onClick={() => handleActiveNavButtonClick('subtract')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'subtract' ? "bg-[#191222]" : ""}`)}>
                                     <SubtractIcon className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'subtract' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
                                 </button>
-                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+                                <button onClick={() => handleActiveNavDetailsButtonClick(1)} className={cn("h-8 group-hover:text-[#605B66]  group-hover:bg-[#191222]", activeNavButtonNumber == 1 ? "text-[#605B66]  bg-[#191222]" : "text-transparent bg-transparent")}> <RightArrow className="w-2" /> </button>
 
                             </div>
                             <div className="flex items-center justify-center group">
                                 <button onClick={() => handleActiveNavButtonClick('smily')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'smily' ? "bg-[#191222]" : ""}`)}>
                                     <Smily className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'smily' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
                                 </button>
-                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+                                <button onClick={() => handleActiveNavDetailsButtonClick(2)} className={cn("h-8 group-hover:text-[#605B66]  group-hover:bg-[#191222]", activeNavButtonNumber == 2 ? "text-[#605B66]  bg-[#191222]" : "text-transparent bg-transparent")}> <RightArrow className="w-2" /> </button>
 
                             </div>
                             <div className="flex items-center justify-center group">
                                 <button onClick={() => handleActiveNavButtonClick('ruler')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'ruler' ? "bg-[#191222]" : ""}`)}>
                                     <Ruler className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'ruler' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
                                 </button>
-                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+                                <button onClick={() => handleActiveNavDetailsButtonClick(3)} className={cn("h-8 group-hover:text-[#605B66]  group-hover:bg-[#191222]", activeNavButtonNumber == 3 ? "text-[#605B66]  bg-[#191222]" : "text-transparent bg-transparent")}> <RightArrow className="w-2" /> </button>
 
                             </div>
                             <div className="flex items-center justify-center group">
                                 <button onClick={() => handleActiveNavButtonClick('text')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'text' ? "bg-[#191222]" : ""}`)}>
                                     <Text className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'text' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
                                 </button>
-                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+                                <button onClick={() => handleActiveNavDetailsButtonClick(4)} className={cn("h-8 group-hover:text-[#605B66]  group-hover:bg-[#191222]", activeNavButtonNumber == 4 ? "text-[#605B66]  bg-[#191222]" : "text-transparent bg-transparent")}> <RightArrow className="w-2" /> </button>
 
                             </div>
                             <div className="flex items-center justify-center group">
                                 <button onClick={() => handleActiveNavButtonClick('brush')} className={cn(" p-1.5 rounded-sm hover:bg-[#191222] group", `${activeNavButton == 'brush' ? "bg-[#191222]" : ""}`)}>
                                     <Brush className={cn("h-5 w-5  group-hover:text-[#725AC1]", `${activeNavButton == 'brush' ? "text-[#725AC1]" : "text-[#605B66]"}`)} />
                                 </button>
-                                <button className="h-8 text-transparent group-hover:text-[#605B66]  group-hover:bg-[#191222]"> <RightArrow className="w-2" /> </button>
+                                <button onClick={() => handleActiveNavDetailsButtonClick(5)} className={cn("h-8 group-hover:text-[#605B66]  group-hover:bg-[#191222]", activeNavButtonNumber == 5 ? "text-[#605B66]  bg-[#191222]" : "text-transparent bg-transparent")}> <RightArrow className="w-2" /> </button>
 
                             </div>
                         </div>
                     </div>
-                    {showNavFloat && <div className="absolute min-h-10 w-32 bg-[#191222] top-10 left-20 z-10"></div>}
+
                 </div>
                 {/* chart container */}
                 <div className="w-full   mt-[26px] flex  justify-between flex-col">
@@ -199,6 +236,12 @@ const TradingChart = ({ market, }: { market: string; }) => {
                         </div>
                     </div>
                 </div>
+                {activeNavButtonNumber != -1 &&
+                    <div ref={floatingNavButtonsRef} className={`w-32 flex flex-col bg-[#191222] border border-[#605B66] absolute left-20 z-10`} style={{ top: positionTop }}>
+                        <button onClick={() => handleFloatButtonClick()} className="px-3 py-2 text-start hover:bg-[#07040B] text-[#605B66] hover:text-[#725AC1]">button 1</button>
+                        <button onClick={() => handleFloatButtonClick()} className="px-3 py-2 text-start hover:bg-[#07040B] text-[#605B66] hover:text-[#725AC1]">buton 2</button>
+                        <button onClick={() => handleFloatButtonClick()} className="px-3 py-2 text-start hover:bg-[#07040B] text-[#605B66] hover:text-[#725AC1]">button 3</button>
+                    </div>}
 
             </div>
             {/* search */}
